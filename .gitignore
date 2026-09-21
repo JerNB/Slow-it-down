@@ -1,0 +1,30 @@
+# Dependencies and generated output
+node_modules/
+coverage/
+build/
+dist/
+*.log
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.openai/
+project.private.config.json
+.vscode/
+.idea/
+
+# Personal records and exports
+private-data/
+user-data/
+manmanlai-export*.json
+
+# OS and temporary files
+.DS_Store
+Thumbs.db
+Desktop.ini
+__pycache__/
+*.pyc
+*.tmp

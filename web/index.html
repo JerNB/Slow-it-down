@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ded5c7">
+  <meta name="description" content="你不是一个人。从一件你想做的小事开始。一个无需注册的心情与期待记录空间。">
+  <title>慢慢来 · 你不是一个人</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+  <script src="app.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="#today" aria-label="慢慢来，回到今天"><span class="brand-symbol" aria-hidden="true">✳</span><span>慢慢来</span></a><nav aria-label="主要导航"><a href="#today" data-page="today">今天</a><a href="#todo" data-page="todo">一件件来</a><a href="#reading" data-page="reading">读一点</a><a href="#wishes" data-page="wishes">我的</a></nav><button class="icon-button privacy-trigger" aria-label="记录与隐私说明" data-action="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v3"/></svg></button></header>
+  <main id="app"></main>
+  <footer><button class="text-button" data-action="connect">想找人聊聊？</button><button class="text-button" data-action="privacy">记录只在这个浏览器里</button></footer>
+  <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
