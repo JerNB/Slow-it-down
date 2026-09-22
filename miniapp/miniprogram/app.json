@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/today/index",
+    "pages/record/index",
+    "pages/history/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "慢慢来",
+    "navigationBarBackgroundColor": "#f6f5ef",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f5ef"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

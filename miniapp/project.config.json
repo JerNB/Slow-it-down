@@ -1,0 +1,16 @@
+{
+  "description": "慢慢来：第一课，首页、心情记录与本机保存",
+  "projectname": "manmanlai",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "miniprogramRoot": "miniprogram/",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "urlCheck": true,
+    "useCompilerPlugins": ["typescript"]
+  },
+  "packOptions": { "ignore": [], "include": [] }
+}

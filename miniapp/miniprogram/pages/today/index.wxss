@@ -1,0 +1,2 @@
+.idea { padding-top: 48rpx; }
+.idea-title { display: block; font-size: 44rpx; line-height: 1.45; font-weight: 500; margin-top: 22rpx; }

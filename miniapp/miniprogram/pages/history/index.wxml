@@ -1,0 +1,25 @@
+<view class="page">
+  <text class="eyebrow">不评分，也不比较</text>
+  <text class="title">看看走过的路。</text>
+  <text class="muted small paragraph">按记录当时的当地日期与时间展示。</text>
+  <view wx:if="{{error}}" class="notice">
+    <text>{{error}}</text>
+    <button class="text-button" hover-class="pressed" bindtap="loadRecords">重新读取</button>
+  </view>
+  <view wx:elif="{{!entries.length}}" class="empty">
+    <text class="paragraph">每一种感受，都可以留下来。</text>
+    <button class="text-button" hover-class="pressed" bindtap="recordMood">记下第一笔 →</button>
+  </view>
+  <block wx:else>
+    <block wx:for="{{entries}}" wx:key="id">
+      <view wx:if="{{index < visibleCount}}" class="entry">
+        <text class="eyebrow">{{item.localDate}} · {{item.localTime}}</text>
+        <text class="entry-title">{{item.mood || '给自己的一句话'}}</text>
+        <text wx:if="{{item.note}}" class="note" selectable>{{item.note}}</text>
+        <button class="text-button small" hover-class="pressed" data-id="{{item.id}}" bindtap="remove" aria-label="删除 {{item.localDate}} {{item.localTime}} 的记录">删除这笔记录</button>
+      </view>
+    </block>
+    <button wx:if="{{entries.length > visibleCount}}" class="secondary" hover-class="pressed" bindtap="showMore">再看一些</button>
+  </block>
+  <view class="divider muted small">仅保存在本机，目前没有云备份。</view>
+</view>

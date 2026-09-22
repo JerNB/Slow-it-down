@@ -4,7 +4,13 @@
 
 面向留学生的中文情绪支持与自我记录工具。通过日常小事、心情记录、轻量待办和阅读灵感，提供一个无需注册、低压力的个人空间。
 
-**当前状态：可运行的静态网站 + 微信小程序迁移规划。** 小程序工程、账户系统、云同步和数据导入导出尚未实现。本仓库于 2026-09-21 收录现有网站快照。
+**当前状态：可运行的静态网站 + 微信小程序第一课工程。** 小程序已新增首页、心情记录和本机足迹的学习闭环；账户系统、云同步、数据导入导出及其余网站功能尚未迁移。小程序尚待微信开发者工具编译和真机验收。本仓库于 2026-09-21 收录现有网站快照。
+
+## 微信小程序：从这里开始
+
+打开 [第一课：跑通小程序](miniapp/第一课-跑通小程序.md)，按步骤安装微信开发者工具并导入 `miniapp/` 目录（含 `project.config.json`）。工程中的 `touristappid` 是学习占位，需按工具支持情况使用测试模式，或填写自己的 AppID。
+
+这一课包含：首页的 24 条小事轮换、心情与文字记录、草稿恢复、本机足迹和删除。代码使用原生小程序 + TypeScript；无需启动网页服务器。代码类型检查和存储测试已通过，尚未在微信工具或真机上运行验证。完整路线见 [迁移计划](微信小程序迁移计划.md)。
 
 ## 功能
 
@@ -17,6 +23,9 @@
 | 读一点 | 两题选书问答、6 本书、推荐理由、引句原文与来源、文学阅读札记 |
 | 我的期待 | 收藏小事和书籍、自定义想法、第一步及删除 |
 | 心情足迹 | 按日展示心情和行动记录的时间线 |
+| 写给异乡的你 | 围绕比较、孤单、适应与归属感的四则留学生来信 |
+| 歇一会 | 3、5、10 分钟静坐计时，支持暂停与当前标签页恢复 |
+| 学校心理支持 | 按校名匹配已核实资料，或在本机查找附近已收录学校 |
 | 找人聊聊 | 编辑并复制开场白，由用户自行发送 |
 | 记录与隐私 | 本地保存说明、清空记录 |
 
@@ -38,7 +47,7 @@ python -m http.server 8000 --bind 127.0.0.1 --directory web
 
 ## 技术与目录
 
-HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后端、无第三方前端框架。
+网站：HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后端、无第三方前端框架。小程序第一课：WXML、WXSS、TypeScript 和微信本地存储；无后端。
 
 ```text
 .
@@ -49,15 +58,20 @@ HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后
 ├── .gitattributes            # 文本换行约定
 ├── package.json              # ES Modules 配置
 ├── 微信小程序迁移计划.md       # 小程序范围、架构、里程碑和验收标准
+├── miniapp/                  # 第一课工程、导入配置、教学文档与存储测试
 └── web/
     ├── index.html            # 入口和导航
     ├── app.js                # 页面、交互、路由和本地存储
     ├── logic.js              # 数据标准化、优先级、排序和推荐逻辑
     ├── content.js            # 小事、书籍、引句和推荐映射
     ├── literature.js         # 文学札记与出处
+    ├── student-space.js      # 留学生来信、静坐和校园支持页面
+    ├── student-space.css     # 上述页面的响应式样式
+    ├── pause-clock.js        # 静坐计时的纯逻辑
+    ├── campus-data.js        # 校园支持资料与本地距离匹配
     ├── style.css             # 响应式样式和视觉变量
     ├── favicon.svg
-    └── still-life.png        # 网站主图
+    └── still-life.png        # 保留但未在页面使用的旧素材
 ```
 
 `web/` 保留现有网站原始文件，只调整所在目录。网站快照来源版本：`f0f96bab6833d715e16bc392f60f6512e1bca553`。原迁移计划中的本机路径是历史来源说明；此仓库的对应源码入口为 `web/`。
@@ -66,6 +80,7 @@ HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后
 
 - `manmanlai.v1`：保存 `wishes`（期待）、`entries`（心情和行动记录）、`todos`（待办）。
 - `manmanlai.last-idea`：保存上次推荐的小事 ID。
+- `manmanlai.pause.v1`：仅在当前标签页保存静坐计时状态。
 - 记录只存在当前浏览器的当前站点下，应用没有将记录上传服务器的接口；选书问答答案不持久化。
 - 不同浏览器、设备、域名、协议或端口的存储相互独立。清除浏览器数据会丢失记录，共用设备的人可能看到记录。
 - 暂无内置备份、导入导出、账户或跨设备同步。未结束的行动和未保存输入不保证刷新后恢复。
@@ -82,12 +97,15 @@ HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后
 
 ```sh
 node --check web/app.js
+node --check web/student-space.js
+node --check web/pause-clock.js
+node --check web/campus-data.js
 node --check web/logic.js
 node --check web/content.js
 node --check web/literature.js
 ```
 
-当前仓库未配置自动化测试套件。浏览器手动验收步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)，语法检查不能替代交互测试。
+网站暂未配置自动化测试套件。小程序可以在 `miniapp/` 中运行 `npm.cmd ci`、`npm.cmd run typecheck` 和 `npm.cmd test`。小程序自动化检查覆盖类型和本地存储逻辑，不替代微信编译或真机测试。浏览器手动验收步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)，语法检查不能替代交互测试。
 
 ## 发布网站
 
@@ -106,7 +124,7 @@ node --check web/literature.js
 5. **P4**：真机、弱网、跨时区和小范围自愿试用。
 6. **P5 / M3**：完成平台要求、审核、正式发布和运维说明。
 
-这些阶段均为计划，不代表已交付。不纳入首版范围的功能包括 AI 对话、心理测评、公开社区和连续打卡。
+目前已开始第一课工程，尚未达到完整 M1；其他阶段仍为计划。不纳入首版范围的功能包括 AI 对话、心理测评、公开社区和连续打卡。
 
 ## 贡献、内容来源与许可
 

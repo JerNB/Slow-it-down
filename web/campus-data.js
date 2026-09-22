@@ -1,0 +1,12 @@
+// Campus reference points are approximate and used only for local distance sorting.
+// Addresses and links checked against university pages on 2026-09-22.
+export const CAMPUSES = [
+ {id:'nyu',name:'纽约大学',english:'New York University',aliases:'NYU 纽约 曼哈顿',lat:40.729,lon:-73.996,center:'Counseling and Wellness Services',address:'726 Broadway, New York, NY',url:'https://tisch.nyu.edu/student-affairs/student-life/health---counseling-services'},
+ {id:'usc',name:'南加州大学',english:'University of Southern California',aliases:'USC 洛杉矶 南加大',lat:34.025,lon:-118.288,center:'Counseling and Mental Health · University Park Campus',address:'Engemann Student Health Center, 1031 West 34th St., Los Angeles, CA 90089',url:'https://safety.usc.edu/resources/counseling/',addressSource:'https://studenthealth.usc.edu/upc-student-health-center/'},
+ {id:'umich',name:'密歇根大学安娜堡分校',english:'University of Michigan Ann Arbor',aliases:'UMich Michigan 密大 安娜堡',lat:42.276,lon:-83.742,center:'Counseling and Psychological Services (CAPS)',address:'Michigan Union, Suite 4079, 530 South State Street, Ann Arbor, MI 48109',url:'https://uhc.umich.edu/'},
+ {id:'berkeley',name:'加州大学伯克利分校',english:'University of California Berkeley',aliases:'UC Berkeley UCB 伯克利 加州',lat:37.868,lon:-122.261,center:'Counseling and Psychological Services (CAPS)',address:'Tang Center, 3rd Floor, 2222 Bancroft Way, Berkeley, CA 94720',url:'https://uhs.berkeley.edu/counseling',addressSource:'https://uhs.berkeley.edu/node/124'},
+ {id:'columbia',name:'哥伦比亚大学',english:'Columbia University',aliases:'Columbia 哥大 纽约 曼哈顿',lat:40.807,lon:-73.964,center:'Counseling and Psychological Services · Morningside',address:'Lerner Hall, 8th Floor, 2920 Broadway, New York, NY 10027',url:'https://www.health.columbia.edu/content/hours-and-locations',addressSource:'https://www.columbia.edu/cu/lernerhall/departments/Eight/index.html'}
+];
+export function distanceKm(a,b){const r=x=>x*Math.PI/180,dlat=r(b.lat-a.lat),dlon=r(b.lon-a.lon);const h=Math.sin(dlat/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dlon/2)**2;return 6371*2*Math.asin(Math.sqrt(Math.min(1,h)));}
+export function matchCampuses(query){const terms=query.trim().toLowerCase().split(/\s+/).filter(Boolean);return terms.length?CAMPUSES.filter(c=>terms.every(t=>`${c.name} ${c.english} ${c.aliases}`.toLowerCase().includes(t))):[];}
+export function nearbyCampuses(point){return CAMPUSES.map(c=>({...c,distance:distanceKm(point,c)})).filter(c=>c.distance<=50).sort((a,b)=>a.distance-b.distance);}

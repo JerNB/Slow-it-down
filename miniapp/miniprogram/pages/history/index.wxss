@@ -1,0 +1,3 @@
+.entry { border-top: 1rpx solid #dadfd3; padding: 32rpx 0 20rpx; }
+.entry-title { display: block; font-size: 38rpx; margin: 18rpx 0; }
+.note { display: block; white-space: pre-wrap; word-break: break-all; }

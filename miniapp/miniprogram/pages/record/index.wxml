@@ -1,0 +1,24 @@
+<view class="page">
+  <text class="eyebrow">留一点时间给自己</text>
+  <text class="title">此刻，感觉怎么样？</text>
+  <view wx:if="{{!submitted}}">
+    <view class="moods">
+      <button wx:for="{{moods}}" wx:key="*this" class="mood {{mood === item ? 'selected' : ''}}" hover-class="pressed" data-mood="{{item}}" bindtap="selectMood" disabled="{{blocked}}" aria-label="{{item}} {{mood === item ? '已选择' : ''}}">{{mood === item ? '✓ ' : ''}}{{item}}</button>
+    </view>
+    <text class="field-label">想说的话 <text class="muted small">· 选填</text></text>
+    <textarea value="{{note}}" bindinput="inputNote" maxlength="2000" placeholder="几个字也没关系。" disabled="{{blocked}}" cursor-spacing="24" aria-label="想说的话" />
+    <text class="muted small paragraph">{{note.length}} / 2000</text>
+    <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+    <button wx:if="{{error && !blocked}}" class="text-button" hover-class="pressed" bindtap="retryDraft">重试保存草稿</button>
+    <text wx:if="{{draftStatus}}" class="muted small paragraph">{{draftStatus}}</text>
+    <view class="button-stack">
+      <button class="primary" hover-class="pressed" bindtap="save" loading="{{saving}}" disabled="{{saving || blocked}}">轻轻记下来</button>
+      <button class="text-button" hover-class="pressed" bindtap="goBack">先回去</button>
+    </view>
+  </view>
+  <view wx:else class="empty">
+    <text class="paragraph">已经记下来了。</text>
+    <text class="muted paragraph">{{draftStatus}}</text>
+    <view class="button-stack"><button class="primary" hover-class="pressed" bindtap="viewHistory">看看这笔足迹</button></view>
+  </view>
+</view>

@@ -1,0 +1,16 @@
+<view class="page">
+  <text class="eyebrow">你不是一个人</text>
+  <text class="title">{{greeting}}，慢慢来。</text>
+  <view class="idea">
+    <text class="eyebrow">今天，不妨试试</text>
+    <text class="idea-title">{{idea.title}}</text>
+    <text class="muted paragraph">{{idea.desc}}</text>
+    <button class="text-button" hover-class="pressed" bindtap="changeIdea">换一个小灵感 ↻</button>
+  </view>
+  <view class="button-stack">
+    <button class="primary" hover-class="pressed" bindtap="recordMood">记一笔此刻的心情</button>
+    <button class="secondary" hover-class="pressed" bindtap="viewHistory">看看心情足迹 · {{recordCount}}</button>
+  </view>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <view class="divider muted small">记录只保存在这台设备的小程序存储中。清除数据或更换设备后，记录可能无法找回。</view>
+</view>
