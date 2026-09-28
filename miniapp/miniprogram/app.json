@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/today/index",
+    "pages/todo/index",
+    "pages/reading/index",
+    "pages/pause/index",
+    "pages/mine/index",
+    "pages/record/index",
+    "pages/history/index",
+    "pages/action/index",
+    "pages/book/index",
+    "pages/letters/index",
+    "pages/campus/index",
+    "pages/contact/index"
+  ],
+  "tabBar": {
+    "color": "#60594f",
+    "selectedColor": "#4e553e",
+    "backgroundColor": "#ded5c7",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/today/index", "text": "今天", "iconPath": "assets/tab/today-normal.png", "selectedIconPath": "assets/tab/today-selected.png" },
+      { "pagePath": "pages/todo/index", "text": "一件件来", "iconPath": "assets/tab/todo-normal.png", "selectedIconPath": "assets/tab/todo-selected.png" },
+      { "pagePath": "pages/reading/index", "text": "读一点", "iconPath": "assets/tab/reading-normal.png", "selectedIconPath": "assets/tab/reading-selected.png" },
+      { "pagePath": "pages/mine/index", "text": "我的", "iconPath": "assets/tab/mine-normal.png", "selectedIconPath": "assets/tab/mine-selected.png" }
+    ]
+  },
+  "window": {
+    "navigationBarTitleText": "慢慢来",
+    "navigationBarBackgroundColor": "#ded5c7",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ded5c7"
+  },
+  "usingComponents": {
+    "home-link": "/components/home-link/index"
+  },
+  "permission": { "scope.userLocation": { "desc": "用于查找所在城市的学校心理支持；也可手动输入校名" } },
+  "requiredPrivateInfos": ["getLocation"],
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

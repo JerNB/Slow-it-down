@@ -1,0 +1,12 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">读一点，也很好</text>
+  <text class="title">此刻，哪本书能陪你？</text>
+  <text class="muted paragraph">两道小问题，找一个愿意翻开的起点。</text>
+  <view wx:if="{{stage === 0}}" class="quiz"><text class="eyebrow">01 / 02</text><text class="section-title">最近，什么最牵动你？</text><button wx:for="{{concerns}}" wx:key="id" class="choice" data-value="{{item.id}}" bindtap="chooseConcern">{{item.label}} →</button></view>
+  <view wx:elif="{{stage === 1}}" class="quiz"><text class="eyebrow">02 / 02</text><text class="section-title">你更想怎样读？</text><button class="choice" data-value="practical" bindtap="chooseStyle">换个角度，也试试练习 →</button><button class="choice" data-value="gentle" bindtap="chooseStyle">轻轻读一点，像有人陪着 →</button><button class="text-button" bindtap="back">上一步</button></view>
+  <view wx:else class="quiz"><text class="eyebrow">可以先从这一本开始</text><text class="section-title">《{{result.title}}》</text><text class="muted paragraph">{{result.author}} · {{result.original}}</text><text class="paragraph">{{reason}}</text><button class="primary" data-id="{{result.id}}" bindtap="viewBook">看看这本书</button><button class="text-button" bindtap="reset">重新选一选</button></view>
+  <view class="divider"><text class="section-title">也可以自己逛逛书架</text><button wx:for="{{books}}" wx:key="id" class="book-row" data-id="{{item.id}}" bindtap="viewBook"><text class="list-title">《{{item.title}}》</text><text class="muted small">{{item.author}} →</text></button></view>
+  <view class="divider"><text class="section-title">文学里的回声</text><button wx:for="{{literature}}" wx:key="id" class="book-row" data-id="{{item.id}}" bindtap="viewLiterature"><text class="eyebrow">{{item.author}} · 《{{item.work}}》</text><text class="list-title">{{item.title}}</text></button></view>
+  <text class="muted small paragraph">这是阅读偏好问答，不是心理测评。标注为引句的内容附有原文与出处；阅读札记是本站的理解。</text>
+</view>

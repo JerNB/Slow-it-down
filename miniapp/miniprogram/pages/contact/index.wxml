@@ -1,0 +1,10 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">不必先整理好情绪</text>
+  <text class="title">从一句话开始。</text>
+  <text class="field-label">改成你自己的语气</text>
+  <textarea value="{{message}}" maxlength="2000" bindinput="input" />
+  <button class="primary paragraph" bindtap="copy">复制这段话</button>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <text class="muted small paragraph">复制后发给让你安心的人。这里不会替你发送。</text>
+</view>

@@ -1,0 +1,7 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">来自一位留学生的经历 · 与你分享</text><text class="title">慢慢来，真的没关系。</text><text class="muted paragraph">环境变了，你的价值没有变少。</text>
+  <view class="divider"><text class="paragraph">这个小空间，起于刚到异国、进入大学时的孤单，也起于一次次被朋友理解、主动走进学校心理咨询室的经历。做这个项目，让我重新有了一件想投入的事。我希望你来到这里时，也能感到：不用着急，你不是一个人。</text><text class="muted small">根据发起人的真实经历整理</text></view>
+  <view wx:for="{{letters}}" wx:key="id" class="divider"><button class="letter-title" data-index="{{index}}" bindtap="toggle" aria-expanded="{{expanded === index}}"><text class="letter-number">{{item.number}}</text><text class="letter-heading">{{item.title}}</text><text class="letter-toggle">{{expanded === index ? '−' : '＋'}}</text></button><view wx:if="{{expanded === index}}" class="letter-body"><text class="paragraph">{{item.context}}</text><text class="paragraph">{{item.reflection}}</text><text class="paragraph">{{item.action}}</text></view></view>
+  <view class="divider support-links"><button class="text-button" bindtap="pause">先歇一会 →</button><button class="text-button" bindtap="campus">了解学校的支持 →</button><button class="text-button" bindtap="contact">找一个安心的人聊聊 →</button></view>
+</view>

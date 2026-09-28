@@ -1,0 +1,53 @@
+<view class="page today-page">
+  <view class="home-top">
+    <view class="home-brand"><text class="brand-symbol">✳</text><text>慢慢来</text></view>
+    <button class="mood-shortcut" hover-class="pressed" bindtap="recordMood">记一笔心情 <text>↗</text></button>
+  </view>
+
+  <view class="home-intro">
+    <text class="eyebrow">{{dateLabel}} · 请记住你不是一个人</text>
+    <text class="title">{{greeting}}，慢慢来</text>
+  </view>
+
+  <view class="home-stage">
+    <view class="idea">
+      <text class="eyebrow">今天，不妨试试</text>
+      <text class="idea-title">{{idea.title}}</text>
+      <text class="idea-desc">{{ideaDescription}}</text>
+      <button class="primary idea-primary" hover-class="pressed" bindtap="startIdea"><text>就做这件小事</text><text class="idea-primary-arrow">→</text></button>
+      <view class="idea-tools">
+        <button class="tool-button" hover-class="pressed" bindtap="changeIdea">↻　换一个</button>
+        <button class="tool-button" hover-class="pressed" bindtap="collectIdea" disabled="{{saved}}">{{saved ? '✓　已收藏' : '＋　收藏'}}</button>
+      </view>
+    </view>
+    <view class="home-mantra">
+      <text class="mantra-watermark">慢</text>
+      <text class="mantra-title">不用一次</text>
+      <text class="mantra-title">解决所有事</text>
+      <text class="mantra-caption">先把今天，过成今天</text>
+    </view>
+  </view>
+
+  <button wx:if="{{hasAction}}" class="resume-action" hover-class="pressed" bindtap="resumeAction"><text>正在进行的小事</text><text>继续 →</text></button>
+
+  <view class="path-section">
+    <text class="eyebrow">按此刻需要的来</text>
+    <text class="path-heading">几个小去处</text>
+    <view class="path-grid">
+      <button class="path path-todo" hover-class="pressed" bindtap="goTodo"><text class="path-index">01 · 整理</text><text class="path-title">一件件来</text><text class="path-copy">{{taskCount ? '还有 ' + taskCount + ' 件事，先挑一件' : '把脑海里的事放下来'}}</text><text class="path-arrow">↗</text></button>
+      <button class="path path-pause" hover-class="pressed" bindtap="goPause"><text class="path-index">02 · 呼吸</text><text class="path-title">歇一会</text><text class="path-copy">给自己几分钟</text><text class="path-arrow">↗</text></button>
+      <button class="path path-letters" hover-class="pressed" bindtap="goLetters"><text class="path-index">03 · 同行</text><text class="path-title">异乡来信</text><text class="path-copy">关于孤单与慢慢适应</text><text class="path-arrow">↗</text></button>
+      <button class="path path-campus" hover-class="pressed" bindtap="goCampus"><text class="path-index">04 · 支持</text><text class="path-title">校园支持</text><text class="path-copy">找学校官网的心理支持页面</text><text class="path-arrow">↗</text></button>
+    </view>
+  </view>
+
+  <view class="reading-preview">
+    <text class="eyebrow">片刻阅读 · {{literature.author}}</text>
+    <text class="reading-title">{{literatureTitle}}</text>
+    <button class="reading-link" hover-class="pressed" bindtap="goReading">再读一点 <text>→</text></button>
+  </view>
+
+  <button class="history-link" hover-class="pressed" bindtap="viewHistory"><text>看看心情足迹</text><text>{{recordCount}} 条　→</text></button>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <text class="storage-note">记录只保存在这台设备中。清除数据或更换设备后，记录可能无法找回。</text>
+</view>

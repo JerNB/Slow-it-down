@@ -1,0 +1,10 @@
+<view class="page pause-page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">这几分钟，不需要证明什么</text><text class="title">{{status === 'finished' ? '慢慢回来就好。' : '先把自己，放回此刻。'}}</text>
+  <text class="muted paragraph">{{status === 'finished' ? '准备好时，再继续你的一天。' : '自然呼吸。走神了，也可以轻轻回来。'}}</text>
+  <view class="timer {{status === 'running' ? 'is-breathing' : ''}}"><view class="timer-ripple timer-ripple-inner" aria-hidden="true"></view><view class="timer-ripple timer-ripple-outer" aria-hidden="true"></view><text class="timer-number">{{time}}</text><text class="eyebrow">{{stateLabel}}</text></view>
+  <view class="wrap durations"><button class="chip {{duration === 180 ? 'selected' : ''}}" data-seconds="180" bindtap="choose" disabled="{{status === 'running'}}">3 分钟</button><button class="chip {{duration === 300 ? 'selected' : ''}}" data-seconds="300" bindtap="choose" disabled="{{status === 'running'}}">5 分钟</button><button class="chip {{duration === 600 ? 'selected' : ''}}" data-seconds="600" bindtap="choose" disabled="{{status === 'running'}}">10 分钟</button></view>
+  <button class="primary paragraph" bindtap="toggle">{{status === 'running' ? '暂停' : status === 'paused' ? '继续' : status === 'finished' ? '再坐一会' : '开始静坐'}}</button><button wx:if="{{status !== 'idle'}}" class="text-button" bindtap="reset">结束这次</button>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <view class="divider"><text class="section-title">第一次尝试？</text><text class="muted paragraph">找一个坐得舒服的位置，眼睛可以睁着。留意自然呼吸，或者脚与地面接触的感觉。不必清空脑海；如果不舒服，随时停下，看看周围。</text><text class="muted small">离开本页会暂停。锁屏或切到后台时，返回后再查看计时状态。</text></view>
+</view>

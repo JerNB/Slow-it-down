@@ -1,0 +1,8 @@
+.feeling-list { margin: 28rpx 0 36rpx; border-top: 1rpx solid #c9bdac; }
+.feeling-option { display: flex; width: 100%; min-height: 112rpx; justify-content: space-between; gap: 24rpx; padding: 18rpx 0; border: 0; border-bottom: 1rpx solid #c9bdac; border-radius: 0; background: transparent; text-align: left; }
+.feeling-copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; }
+.feeling-name { color: #443f38; font-size: 31rpx; }
+.feeling-hint { color: #71695e; font-size: 25rpx; }
+.feeling-mark { box-sizing: border-box; width: 34rpx; height: 34rpx; margin-right: 4rpx; border: 1rpx solid #a99f8d; border-radius: 50%; color: #fffaf2; font-size: 23rpx; line-height: 32rpx; text-align: center; }
+.feeling-option.selected .feeling-name { color: #4e553e; }
+.feeling-option.selected .feeling-mark { border-color: #626950; background: #626950; }

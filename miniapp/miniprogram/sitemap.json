@@ -1,0 +1,4 @@
+{
+  "desc": "学习版本不参与页面索引",
+  "rules": [{ "action": "disallow", "page": "*" }]
+}

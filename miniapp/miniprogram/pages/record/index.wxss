@@ -1,0 +1,3 @@
+.moods { display: flex; flex-wrap: wrap; gap: 16rpx; margin: 32rpx 0; }
+.mood { min-height: 96rpx; padding: 20rpx 24rpx; background: #eee6da; color: #443f38; line-height: 1.5; }
+.mood.selected { background: #626950; color: #fffaf2; }

@@ -4,7 +4,13 @@
 
 面向留学生的中文情绪支持与自我记录工具。通过日常小事、心情记录、轻量待办和阅读灵感，提供一个无需注册、低压力的个人空间。
 
-**当前状态：可运行的静态网站 + 微信小程序迁移规划。** 小程序工程、账户系统、云同步和数据导入导出尚未实现。本仓库于 2026-09-21 收录现有网站快照。
+**当前状态：可运行的网站与微信小程序本机功能迁移版。** 小程序已有首页、心情记录、待办、阅读、期待、行动反馈、静坐和支持入口；学校心理支持查询另需运行查询服务。账户、云同步、数据导入导出仍未实现。新页面尚待微信开发者工具编译和真机验收。本仓库于 2026-09-21 收录现有网站快照。
+
+## 微信小程序：从这里开始
+
+初次导入参照 [第一课：跑通小程序](miniapp/第一课-跑通小程序.md)，选择 `miniapp/` 目录（含 `project.config.json`）。完成第一课后，从 [第二课：网站功能迁移](miniapp/第二课-网站功能迁移.md) 的验收流程继续。项目配置中的 AppID 由开发者工具按当前账号设置，不要使用第一课文档里提到的学习占位值。
+
+代码使用原生小程序 + TypeScript；除学校心理支持查询外，本机功能无需网页服务器。当前 TypeScript 检查和存储测试已通过；新增页面仍待微信工具与真机验证。完整路线见 [迁移计划](微信小程序迁移计划.md)。
 
 ## 功能
 
@@ -17,6 +23,9 @@
 | 读一点 | 两题选书问答、6 本书、推荐理由、引句原文与来源、文学阅读札记 |
 | 我的期待 | 收藏小事和书籍、自定义想法、第一步及删除 |
 | 心情足迹 | 按日展示心情和行动记录的时间线 |
+| 写给异乡的你 | 围绕比较、孤单、适应与归属感的四则留学生来信 |
+| 歇一会 | 3、5、10 分钟静坐计时，支持暂停与当前标签页恢复 |
+| 学校心理支持 | 校名搜索或主动定位后选择城市中的学校，查找学校官网支持页面 |
 | 找人聊聊 | 编辑并复制开场白，由用户自行发送 |
 | 记录与隐私 | 本地保存说明、清空记录 |
 
@@ -24,21 +33,23 @@
 
 ## 本地运行
 
-准备 Python 3 和现代浏览器，然后执行：
+准备 Node.js 20 以上版本和现代浏览器，然后执行：
 
 ```sh
-git clone https://github.com/JerNB/manmanlai.git
-cd manmanlai
-python -m http.server 8000 --bind 127.0.0.1 --directory web
+git clone https://github.com/JerNB/Slow-it-down.git
+cd Slow-it-down
+npm start
 ```
 
-打开 <http://127.0.0.1:8000>。Windows 如未配置 `python` 命令，可使用 `py -3`。停止服务按 `Ctrl+C`。私有仓库克隆需要对应 GitHub 访问权限。
+打开 <http://127.0.0.1:3000>。停止服务按 `Ctrl+C`。私有仓库克隆需要对应 GitHub 访问权限。
 
-项目使用浏览器原生 ES Modules，应通过 HTTP 服务访问，不要直接双击 `index.html`。无需安装 npm 依赖，也没有构建步骤；`package.json` 中的 `type: module` 用于标明 JavaScript 模块类型。
+网站首页的新排版为默认版本；此前的首页排版保留在 <http://127.0.0.1:3000/?home=previous#today>，便于并排比较。两版使用相同的功能与本地记录。
+
+项目使用浏览器原生 ES Modules，应通过 HTTP 服务访问，不要直接双击 `index.html`。无需安装 npm 依赖，也没有构建步骤。
 
 ## 技术与目录
 
-HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后端、无第三方前端框架。
+网站：HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；学校查询使用 Node 接口；首页动画使用仓库内的 GSAP。小程序：WXML、WXSS、TypeScript 和微信本地存储；学校查询共用同一接口。
 
 ```text
 .
@@ -48,16 +59,22 @@ HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后
 ├── .gitignore                # 本地配置、凭据和生成文件排除规则
 ├── .gitattributes            # 文本换行约定
 ├── package.json              # ES Modules 配置
+├── server/                   # 网页服务、学校查询接口与测试
 ├── 微信小程序迁移计划.md       # 小程序范围、架构、里程碑和验收标准
+├── miniapp/                  # 第一课工程、导入配置、教学文档与存储测试
 └── web/
     ├── index.html            # 入口和导航
     ├── app.js                # 页面、交互、路由和本地存储
     ├── logic.js              # 数据标准化、优先级、排序和推荐逻辑
     ├── content.js            # 小事、书籍、引句和推荐映射
     ├── literature.js         # 文学札记与出处
+    ├── student-space.js      # 留学生来信、静坐和校园支持页面
+    ├── student-space.css     # 上述页面的响应式样式
+    ├── pause-clock.js        # 静坐计时的纯逻辑
+    ├── campus-data.js        # 五所学校的人工核对资料
     ├── style.css             # 响应式样式和视觉变量
     ├── favicon.svg
-    └── still-life.png        # 网站主图
+    └── still-life.png        # 保留但未在页面使用的旧素材
 ```
 
 `web/` 保留现有网站原始文件，只调整所在目录。网站快照来源版本：`f0f96bab6833d715e16bc392f60f6512e1bca553`。原迁移计划中的本机路径是历史来源说明；此仓库的对应源码入口为 `web/`。
@@ -66,11 +83,12 @@ HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后
 
 - `manmanlai.v1`：保存 `wishes`（期待）、`entries`（心情和行动记录）、`todos`（待办）。
 - `manmanlai.last-idea`：保存上次推荐的小事 ID。
+- `manmanlai.pause.v1`：仅在当前标签页保存静坐计时状态。
 - 记录只存在当前浏览器的当前站点下，应用没有将记录上传服务器的接口；选书问答答案不持久化。
 - 不同浏览器、设备、域名、协议或端口的存储相互独立。清除浏览器数据会丢失记录，共用设备的人可能看到记录。
 - 暂无内置备份、导入导出、账户或跨设备同步。未结束的行动和未保存输入不保证刷新后恢复。
 - 现有时间线按浏览器当前时区分组；跨时区历史日期稳定性属于小程序迁移计划中的待改进内容。
-- 阅读来源链接会打开外部网站。静态托管服务的访问日志由所选服务自行处理，不属于应用内的心情记录存储。
+- 阅读来源链接会打开外部网站。网站服务会处理页面和学校查询请求，但不接收心情记录；部署平台可能保留访问日志。
 
 请勿将个人日记、用户导出数据、密钥或真实账号配置提交到仓库。
 
@@ -82,16 +100,23 @@ HTML、CSS、原生 JavaScript；hash 路由；浏览器 `localStorage`；无后
 
 ```sh
 node --check web/app.js
+node --check web/student-space.js
+node --check web/pause-clock.js
+node --check web/campus-data.js
 node --check web/logic.js
 node --check web/content.js
 node --check web/literature.js
 ```
 
-当前仓库未配置自动化测试套件。浏览器手动验收步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)，语法检查不能替代交互测试。
+网站查询服务可运行 `npm.cmd test`；小程序可以在 `miniapp/` 中运行 `npm.cmd ci`、`npm.cmd run typecheck` 和 `npm.cmd test`。这些检查不替代微信编译或真机测试。浏览器手动验收步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 发布网站
 
-`web/` 是静态站点根目录，可由静态 HTTP 服务托管，无需构建。部署应保留全部文件和相对路径，生产环境使用 HTTPS。hash 路由不需要服务端页面重写。
+在仓库根目录运行 `npm.cmd start`，打开 `http://localhost:3000`。这个 Node 服务同时提供网页与 `/api/campus/*` 查询接口；网站其余功能仍为本地运行。生产环境需将服务部署在 HTTPS 域名上，仅上传 `web/` 到静态托管会使学校查询不可用。
+
+学校搜索使用 [ROR 机构目录](https://ror.org/) 获取校名、城市和官网；查询服务只沿学校官方域名查找心理支持页面，无法核实就显示未找到。定位由用户点击后触发：设备直接调用 [BigDataCloud 客户端位置服务](https://www.bigdatacloud.com/docs/article/fair-use-policy-for-free-client-side-reverse-geocoding-api)将坐标换成城市，本站查询服务只收到城市和国家。城市不能证明用户就读的学校，所以必须手动选校。服务器不记录搜索词或位置，也不上传心情记录。
+
+小程序开发者工具联调时启动同一个 Node 服务，并将 `miniapp/miniprogram/config.ts` 的地址指向可访问的接口。真机和发布前，需要部署 HTTPS 服务、将该域名与 `https://api.bigdatacloud.net` 加入小程序的 request 合法域名，并在微信后台完成定位权限/隐私声明；本仓库没有生产域名或已发布的服务。小程序中的官网链接通过复制后由用户自行打开。
 
 本次仅建立源码仓库，未配置或开通新的托管服务。仓库不包含原环境的部署绑定配置。更换站点地址不会自动迁移用户浏览器中的旧记录。
 
@@ -106,7 +131,7 @@ node --check web/literature.js
 5. **P4**：真机、弱网、跨时区和小范围自愿试用。
 6. **P5 / M3**：完成平台要求、审核、正式发布和运维说明。
 
-这些阶段均为计划，不代表已交付。不纳入首版范围的功能包括 AI 对话、心理测评、公开社区和连续打卡。
+目前已开始第一课工程，尚未达到完整 M1；其他阶段仍为计划。不纳入首版范围的功能包括 AI 对话、心理测评、公开社区和连续打卡。
 
 ## 贡献、内容来源与许可
 
