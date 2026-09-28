@@ -1,0 +1,7 @@
+# Upload only the website and the campus API used by the deployment.
+/*
+!web
+!api
+!server
+!package.json
+!vercel.json
