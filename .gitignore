@@ -12,6 +12,7 @@ dist/
 *.pem
 *.key
 .openai/
+.vercel/
 project.private.config.json
 .vscode/
 .idea/
