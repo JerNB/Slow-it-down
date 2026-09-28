@@ -1,0 +1,116 @@
+/* The inner pages share the home's paper, type rhythm and small clay accents. */
+body:has(#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus)){
+  --bg:#eeeae0;--ink:#35352e;--muted:#5f6055;--green:#485642;--sage:#d6dccd;--line:#c8c5b8;--paper:#f8f5ed;
+  background:var(--bg);
+}
+body:has(#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus)) .brand-symbol{color:#926e5e}
+body:has(#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus)) footer{border-top:1px solid var(--line)}
+#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus){margin-top:60px;margin-bottom:78px}
+#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus) .page-heading{margin:0 0 45px}
+#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus) .page-heading h1{font-size:clamp(38px,4vw,50px);line-height:1.38;letter-spacing:.025em;margin-bottom:12px;text-wrap:balance}
+#app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus) .page-heading .muted{font-size:16px;line-height:1.85;max-width:38em}
+#app:is(.page-todo,.page-reading,.page-letters,.page-campus) .page-heading .eyebrow{display:flex;align-items:center;gap:13px;color:#765e50;font-size:12px;letter-spacing:.15em;margin-bottom:19px}
+#app:is(.page-todo,.page-reading,.page-letters,.page-campus) .page-heading .eyebrow::before{content:'';display:block;width:27px;height:1px;background:#926e5e}
+
+/* Tasks stay fast to capture and easy to scan. */
+.page-todo .capture-form{background:transparent;border-radius:0;border-bottom:1px solid #8c9685;padding:4px 2px 11px;margin:0 0 46px}
+.page-todo .capture-form input{font-size:18px;padding:14px 12px}
+.page-todo .capture-form input::placeholder{color:#68695f}
+.page-todo .capture-form .icon-button{color:var(--green)}
+.page-todo .task-gesture-note{border-left:1px solid #926e5e;padding-left:14px;margin:23px 0 0;color:#765e50;font-size:13px;line-height:1.7}
+.page-todo .focus-group{background:#dbe2d4;border-radius:0 0 46px 0;padding:27px 30px;margin-bottom:40px}
+.page-todo .task-group h2{font-size:13px;letter-spacing:.12em;margin-bottom:14px}
+.page-todo .task-group:not(.focus-group){padding-top:12px;border-top:1px solid var(--line)}
+.page-todo .page-note{margin-top:38px}
+.page-todo .todo-row{display:block;position:relative;overflow:hidden;padding:0}
+.page-todo .task-slip{position:relative;z-index:1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 0;transform:translate3d(var(--tear-x,0px),0,0) rotate(var(--tear-rotate,0deg));transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .3s ease}
+.page-todo .task-main{touch-action:pan-y;cursor:grab}
+.page-todo .task-start{margin-left:0}
+.page-todo .todo-row.is-dragging,.page-todo .todo-row.is-tearing{background:#dce3d5}
+.page-todo .todo-row.is-dragging .task-slip,.page-todo .todo-row.is-tearing .task-slip{background:var(--paper);box-shadow:0 5px 18px #383b2a18;will-change:transform}
+.page-todo .todo-row.is-dragging .task-slip{transition:none;user-select:none;cursor:grabbing}
+.page-todo .todo-row.tear-ready::before{content:'松开，完成这件事';position:absolute;top:50%;z-index:0;transform:translateY(-50%);font-size:13px;color:var(--green);letter-spacing:.04em}
+.page-todo .todo-row.tear-left::before{right:18px}
+.page-todo .todo-row.tear-right::before{left:18px}
+.page-todo .todo-row.tear-left .task-slip{clip-path:polygon(0 0,calc(100% - 8px) 0,100% 12%,calc(100% - 5px) 24%,100% 36%,calc(100% - 8px) 49%,100% 62%,calc(100% - 5px) 75%,100% 88%,calc(100% - 8px) 100%,0 100%)}
+.page-todo .todo-row.tear-right .task-slip{clip-path:polygon(8px 0,100% 0,100% 100%,8px 100%,0 88%,5px 75%,0 62%,8px 49%,0 36%,5px 24%,0 12%)}
+.page-todo .todo-row.is-tearing .task-slip{opacity:0}
+
+/* A two-question reading path, laid out like a contents page. */
+.page-reading .quiz{background:transparent;border-radius:0;border-top:1px solid var(--line);padding:31px 0 14px}
+.page-reading .quiz>.eyebrow,.page-reading .quiz-top .eyebrow{color:#926e5e;font-size:12px;letter-spacing:.16em}
+.page-reading .quiz h2{font-size:clamp(28px,3.2vw,38px);line-height:1.5;margin:22px 0 22px}
+.page-reading .quiz-options{gap:0;border-top:1px solid var(--line)}
+.page-reading .quiz-options button{min-height:76px;background:transparent;border-radius:0;border-bottom:1px solid var(--line);padding:18px 5px;font-family:var(--serif);font-size:21px;line-height:1.6}
+.page-reading .quiz-options button:hover{background:#e3e8dc}
+.page-reading .quiz-options button small{font-family:var(--sans);font-size:14px;line-height:1.7}
+.page-reading .bookshelf{margin-top:30px;border-top:1px solid var(--line)}
+.page-reading .bookshelf summary{display:list-item;min-height:58px;padding:15px 0;font-family:var(--serif);font-size:19px;color:var(--ink)}
+.page-reading .bookshelf summary span{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.page-reading .result-actions .primary{border-radius:2px;min-height:48px}
+.page-reading .quiz .literary-note{border-top:1px solid var(--line);margin-top:38px;padding-top:31px}
+.note-question{border-left:2px solid #aa8b78;margin:27px 0;padding:7px 0 7px 18px;font-family:var(--serif);font-size:18px;line-height:1.8}
+.note-question span{display:block;color:#765e50;font-family:var(--sans);font-size:12px;letter-spacing:.05em;margin-bottom:5px}
+
+/* The personal area remains familiar while records become an open timeline. */
+.page-wishes .personal-tabs,.page-history .personal-tabs{border-bottom:1px solid var(--line);gap:32px;margin-bottom:38px}
+.page-wishes .personal-tabs a,.page-history .personal-tabs a{min-height:46px;font-size:15px}
+.page-wishes .personal-tabs a[aria-current=page],.page-history .personal-tabs a[aria-current=page]{border-color:#926e5e}
+.page-wishes .wish{padding:29px 0}
+.page-wishes .wish h2{font-size:27px;line-height:1.5}
+.page-history .timeline-day{grid-template-columns:112px minmax(0,1fr);gap:30px;margin-bottom:35px}
+.page-history .timeline-date{font-size:13px;letter-spacing:.08em;padding-top:4px;color:#765e50}
+.page-history .history-entry{background:transparent;border-radius:0;border-left:1px solid #b4ad9d;padding:1px 38px 28px 25px;margin:0;min-height:92px}
+.page-history .history-entry:last-child{padding-bottom:10px}
+.page-history .entry-meta{font-size:12px;letter-spacing:.04em;color:#765e50}
+.page-history .history-entry h2{font-size:20px;line-height:1.5;margin:8px 0}
+.page-history .history-entry p{font-size:15px;line-height:1.9}
+.page-history .entry-delete{right:0;top:0}
+.page-wishes .empty,.page-history .empty{padding:74px 20px 88px}
+.page-wishes .empty h2,.page-history .empty h2{font-size:27px}
+
+/* Letters invite slower reading without changing their disclosure pattern. */
+.page-letters .student-letter{padding:5px 0 40px}
+.page-letters .student-letter p:first-child{font-size:20px;line-height:2.05;max-width:34em}
+.page-letters .student-letter .page-note{font-size:12px;color:#765e50}
+.page-letters .letter-list{counter-reset:letter;margin:34px 0 45px}
+.page-letters .letter-list details{counter-increment:letter;padding:16px 0}
+.page-letters .letter-list summary{display:flex;align-items:baseline;gap:17px;list-style:none;min-height:62px;padding:12px 0;font-size:24px;line-height:1.6}
+.page-letters .letter-list summary::-webkit-details-marker{display:none}
+.page-letters .letter-list summary::before{content:'0' counter(letter);font-family:var(--sans);font-size:12px;letter-spacing:.12em;color:#926e5e;flex:none}
+.page-letters .letter-list summary::after{content:'+';font-family:var(--sans);font-size:22px;font-weight:300;color:var(--green);margin-left:auto;padding-left:12px;flex:none}
+.page-letters .letter-list details[open] summary::after{content:'−'}
+.page-letters .letter-list p{max-width:37em;line-height:2.05;margin:18px 0 18px 38px}
+
+/* Campus support keeps search and location immediately available. */
+#app.page-campus .page-heading{margin-bottom:34px}
+.page-campus #campus-form .field{margin-top:0;font-size:14px}
+.page-campus .campus-search{gap:10px}
+.page-campus .campus-search input{min-height:56px;border-radius:2px;background:#f8f5ed;padding:13px 16px}
+.page-campus .campus-search .primary{min-height:56px;border-radius:2px;padding-inline:23px}
+.page-campus .campus-location{margin-top:20px}
+.page-campus .location-note{font-size:13px;line-height:1.8;margin-top:14px}
+.page-campus .campus-schools{margin-top:44px}
+.page-campus .campus-detail{margin-top:44px}
+.page-campus .campus-school-name{font-size:22px}
+.page-campus .campus-resource>a{font-size:21px}
+
+@media(max-width:760px){
+ #app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus){margin-top:35px;margin-bottom:55px}
+ #app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus) .page-heading{margin-bottom:34px}
+ #app:is(.page-todo,.page-reading,.page-wishes,.page-history,.page-letters,.page-campus) .page-heading h1{font-size:clamp(31px,5vw,40px)}
+ .page-history .timeline-day{grid-template-columns:1fr;gap:8px}
+ .page-history .history-entry{padding-left:20px}
+}
+@media(max-width:540px){
+ .page-todo .capture-form input{font-size:16px}
+ .page-todo .focus-group{padding:23px 20px;border-radius:0 0 33px 0}
+ .page-reading .quiz h2{font-size:28px}
+ .page-reading .quiz-options button{font-size:18px;min-height:70px}
+ .page-reading .bookshelf summary{font-size:18px}
+ .page-letters .student-letter p:first-child{font-size:18px}
+ .page-letters .letter-list summary{font-size:20px;gap:11px}
+ .page-letters .letter-list p{margin-left:0}
+ .page-campus .campus-search .primary{padding-inline:14px}
+ .page-campus .campus-search input{padding-inline:12px}
+}
