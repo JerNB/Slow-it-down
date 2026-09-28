@@ -7,7 +7,7 @@ const app=document.querySelector('#app'),dialog=document.querySelector('#dialog'
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(36).slice(2)}`;
 const emptyData=()=>({wishes:[],entries:[],todos:[]});
-let data=emptyData(),storageOK=true,page='today',selectedMood='',moodDraft='',todoDraft='',activeIdea=null,reflection='',quizConcern='',quizStyle='',lastTrigger=null;
+let data=emptyData(),storageOK=true,page='today',selectedMood='',moodDraft='',todoDraft='',activeIdea=null,reflection='',quizConcern='',quizStyle='',lastTrigger=null,returnToWays=false;
 try{const raw=localStorage.getItem(KEY);if(raw)data=normalize(JSON.parse(raw));}catch{storageOK=false;}
 let suggestion,undoTask=null;
 function nextSuggestion(){let previous=suggestion?.id;try{previous=previous||localStorage.getItem(IDEA_KEY);}catch{}suggestion=pickIdea(IDEAS,previous);try{localStorage.setItem(IDEA_KEY,suggestion.id);}catch{}}
@@ -231,7 +231,18 @@ document.addEventListener('submit',e=>{
  if(form.id==='edit-task-form'){const title=fields.get('title').trim();if(!title)return;if(save({...data,todos:prioritize(data.todos.map(t=>t.id===form.dataset.id?{...t,title,step:fields.get('step').trim()}:t),form.dataset.id,fields.get('priority')||data.todos.find(t=>t.id===form.dataset.id).priority)})){closeDialog();render();toast('已保存。');}}
 });
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog();}});
-window.addEventListener('hashchange',()=>{if(dialog.open)closeDialog();render();window.scrollTo({top:0,behavior:'instant'});});
+app.addEventListener('click',e=>{if(e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey&&e.target.closest('.flow-paths .flow-path'))returnToWays=true;});
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+window.addEventListener('hashchange',()=>{
+ if(dialog.open)closeDialog();
+ render();
+ if(page==='today'&&returnToWays){
+  const ways=app.querySelector('.flow-ways'),heading=app.querySelector('#flow-ways-title');
+  ways?.scrollIntoView({block:'start',behavior:'instant'});
+  heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});
+  returnToWays=false;
+ }else window.scrollTo({top:0,behavior:'instant'});
+});
 window.addEventListener('storage',e=>{if(e.key===KEY){try{data=e.newValue?normalize(JSON.parse(e.newValue)):emptyData();storageOK=true;render();}catch{storageOK=false;render();}}});
 window.addEventListener('scroll',scheduleHomeProgress,{passive:true});
 window.addEventListener('resize',scheduleHomeProgress,{passive:true});
