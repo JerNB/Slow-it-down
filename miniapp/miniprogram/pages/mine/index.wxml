@@ -1,0 +1,11 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">等你想开始时，再回来</text><text class="title">存一点期待。</text>
+  <button wx:if="{{!adding}}" class="secondary" bindtap="startAdd">记下一个想法</button>
+  <view wx:else class="field"><text class="field-label">我有点想……</text><input value="{{title}}" maxlength="160" bindinput="inputTitle" placeholder="比如，做一个温暖的小程序" /><text class="field-label">第一小步 · 选填</text><textarea value="{{step}}" maxlength="500" bindinput="inputStep" placeholder="写下最容易开始的一步。" /><view class="button-stack"><button class="primary" bindtap="saveWish">存下这份期待</button><button class="text-button" bindtap="cancelAdd">以后再说</button></view></view>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <view wx:if="{{wishes.length}}" class="divider"><text class="section-title">我的期待 · {{wishes.length}}</text><view wx:for="{{wishes}}" wx:key="id" class="list-row"><text class="list-title">{{item.title}}</text><text class="muted small">{{item.step || '还没想到第一步也没关系。'}}</text><view class="row"><button class="text-button" data-id="{{item.id}}" bindtap="start">从一小步开始 →</button><button class="text-button danger small" data-id="{{item.id}}" bindtap="remove">移除</button></view></view></view>
+  <view class="divider"><text class="section-title">我的记录</text><button class="text-button" bindtap="history">心情足迹 · {{entryCount}} 条 →</button></view>
+  <view class="divider"><text class="section-title">多一点支持</text><view class="support-links"><button class="text-button" bindtap="letters">写给异乡的你 →</button><button class="text-button" bindtap="campus">找学校心理支持 →</button><button class="text-button" bindtap="contact">找一个安心的人聊聊 →</button></view></view>
+  <view class="divider"><text class="section-title">关于记录与隐私</text><text class="muted small paragraph">无需注册。心情、期待、待办和行动足迹只保存在当前设备的小程序存储中；没有云同步。清除微信存储或更换设备可能丢失记录；共用设备的人也可能看到。选书问答不保存答案。查找学校支持时，校名或城市会发送给本站查询服务；只有主动点击定位后，坐标才由设备直接发送给 BigDataCloud 换算城市，本站不接收坐标。本工具提供自我记录与阅读灵感，不提供心理诊断或治疗。</text><button class="text-button danger" bindtap="clearAll">清空我的所有本机记录</button></view>
+</view>

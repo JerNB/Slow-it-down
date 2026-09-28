@@ -1,0 +1,1 @@
+<button class="home-link" hover-class="home-link-pressed" bindtap="goHome" aria-label="回到首页"><text class="home-link-arrow">←</text><text>回到首页</text></button>

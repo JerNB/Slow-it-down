@@ -1,4 +1,5 @@
 <view class="page">
+  <view class="home-nav"><home-link /></view>
   <text class="eyebrow">不评分，也不比较</text>
   <text class="title">看看走过的路。</text>
   <text class="muted small paragraph">按记录当时的当地日期与时间展示。</text>
@@ -14,9 +15,10 @@
     <block wx:for="{{entries}}" wx:key="id">
       <view wx:if="{{index < visibleCount}}" class="entry">
         <text class="eyebrow">{{item.localDate}} · {{item.localTime}}</text>
-        <text class="entry-title">{{item.mood || '给自己的一句话'}}</text>
+        <text class="entry-title">{{item.title}}</text>
+        <text wx:if="{{item.feeling}}" class="muted paragraph">{{item.feeling}}</text>
         <text wx:if="{{item.note}}" class="note" selectable>{{item.note}}</text>
-        <button class="text-button small" hover-class="pressed" data-id="{{item.id}}" bindtap="remove" aria-label="删除 {{item.localDate}} {{item.localTime}} 的记录">删除这笔记录</button>
+        <button class="text-button small" hover-class="pressed" data-id="{{item.id}}" data-kind="{{item.kind}}" bindtap="remove" aria-label="删除 {{item.localDate}} {{item.localTime}} 的记录">删除这笔记录</button>
       </view>
     </block>
     <button wx:if="{{entries.length > visibleCount}}" class="secondary" hover-class="pressed" bindtap="showMore">再看一些</button>

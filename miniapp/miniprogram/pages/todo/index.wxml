@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">给脑子腾一点地方</text>
+  <text class="title">一件一件来。</text>
+  <text class="muted paragraph">先记下来，再决定哪件值得先做。</text>
+  <view class="row field">
+    <input class="task-input row-main" value="{{title}}" bindinput="inputTitle" maxlength="160" placeholder="有什么事在脑子里打转？" aria-label="记下待办事项" />
+    <button class="secondary" bindtap="add">添加</button>
+  </view>
+  <view class="add-priority"><text class="muted small">先放在</text><picker mode="selector" range="{{priorityOptions}}" value="{{addPriorityIndex}}" bindchange="changeAddPriority"><view class="picker">{{priorityOptions[addPriorityIndex]}} ▾</view></picker></view>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <block wx:if="{{!editing}}">
+    <block wx:for="{{groups}}" wx:key="key" wx:for-item="group">
+      <view wx:if="{{group.tasks.length || group.key === 'now'}}" class="task-group">
+        <text class="section-title">{{group.name}}</text>
+        <text wx:if="{{!group.tasks.length}}" class="muted small">{{group.key === 'now' ? '从下面挑一件就好。' : '先把事情放在这里。'}}</text>
+        <block wx:for="{{group.tasks}}" wx:key="id" wx:for-item="task">
+          <view class="list-row">
+            <view class="row"><view class="row-main"><text class="list-title">{{task.title}}</text><text wx:if="{{task.step}}" class="muted small">{{task.step}}</text></view><button class="text-button small" data-id="{{task.id}}" bindtap="openEdit">整理</button></view>
+            <view class="row"><button wx:if="{{task.priority !== 'now'}}" class="text-button small" data-id="{{task.id}}" bindtap="focus">先做</button><button wx:if="{{task.priority === 'now'}}" class="text-button small" data-id="{{task.id}}" bindtap="start">开始这一小步 →</button><button class="text-button small" data-id="{{task.id}}" bindtap="toggle">做过了 ✓</button></view>
+          </view>
+        </block>
+      </view>
+    </block>
+    <view wx:if="{{completed.length}}" class="divider"><text class="section-title">已经做过的事</text><block wx:for="{{completed}}" wx:key="id"><view class="list-row row"><text class="row-main muted">{{item.title}}</text><button class="text-button small" data-id="{{item.id}}" bindtap="toggle">放回待办</button><button class="text-button small" data-id="{{item.id}}" bindtap="openEdit">整理</button></view></block></view>
+    <text class="muted small paragraph">“先做”只留一件。换一件时，上一件会移到“接下来”。</text>
+  </block>
+  <view wx:else class="edit-panel">
+    <text class="section-title">整理这件事</text>
+    <text class="field-label">这件事</text><input value="{{editTitle}}" maxlength="160" bindinput="inputEditTitle" />
+    <text class="field-label">第一小步 · 选填</text><textarea value="{{editStep}}" maxlength="500" bindinput="inputEditStep" placeholder="比如：打开文档，写下标题。" />
+    <text class="field-label">放在哪里</text><picker mode="selector" range="{{priorityOptions}}" value="{{priorityIndex}}" bindchange="changePriority"><view class="picker">{{priorityOptions[priorityIndex]}} ▾</view></picker>
+    <view class="button-stack"><button class="primary" bindtap="saveEdit">保存</button><button class="secondary" bindtap="cancelEdit">返回列表</button></view>
+    <view class="row divider"><button class="text-button small" data-id="{{editId}}" data-direction="-1" bindtap="move">上移</button><button class="text-button small" data-id="{{editId}}" data-direction="1" bindtap="move">下移</button><button class="text-button danger small" bindtap="delete">删除</button></view>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+.task-input, .edit-panel input { box-sizing: border-box; min-height: 96rpx; padding: 0 22rpx; border: 1rpx solid #c9bdac; border-radius: 18rpx; background: #eee6da; }
+.add-priority { display: flex; align-items: center; gap: 18rpx; margin: -8rpx 0 30rpx; }
+.add-priority .picker { padding: 12rpx 24rpx; }
+.task-group { margin: 34rpx 0; }
+.task-group .row { flex-wrap: wrap; }
+.edit-panel { margin-top: 32rpx; }
+.picker { padding: 24rpx; border: 1rpx solid #c9bdac; border-radius: 18rpx; background: #eee6da; }

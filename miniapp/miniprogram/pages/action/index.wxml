@@ -1,0 +1,19 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">一个小小的开始</text><text class="title">{{title || '慢慢来'}}</text>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+  <view wx:if="{{phase === 'prepare'}}">
+    <text class="field-label">就从这一步开始</text><textarea value="{{step}}" maxlength="500" bindinput="inputStep" placeholder="写下足够容易开始的第一步。" />
+    <view class="button-stack"><button class="primary" bindtap="start" disabled="{{!actionId}}">好，开始吧</button><button class="text-button" bindtap="stop">以后再说</button></view>
+  </view>
+  <view wx:elif="{{phase === 'doing'}}">
+    <text class="section-title">这段时间，属于你。</text><text class="paragraph">{{step}}</text><text class="muted paragraph">不用计时，随时停下来也可以。</text>
+    <view class="button-stack"><button class="primary" bindtap="reflect">我回来了</button><button class="secondary" bindtap="adjustStep">调整这一步</button><button class="text-button" bindtap="stop">先放一放</button></view>
+  </view>
+  <view wx:elif="{{phase === 'reflect'}}">
+    <text class="section-title">刚才，感觉怎么样？</text><view class="feeling-list"><button wx:for="{{feelings}}" wx:key="value" class="feeling-option {{feeling === item.value ? 'selected' : ''}}" data-value="{{item.value}}" bindtap="selectFeeling"><view class="feeling-copy"><text class="feeling-name">{{item.value}}</text><text class="feeling-hint">{{item.hint}}</text></view><text class="feeling-mark">{{feeling === item.value ? '✓' : ''}}</text></button></view>
+    <text class="field-label">还有什么想说的 · 选填</text><textarea value="{{note}}" maxlength="2000" bindinput="inputNote" placeholder="还没好起来，也可以写在这里" />
+    <view class="button-stack"><button class="primary" bindtap="save" disabled="{{saving}}">留下一点足迹</button><button class="text-button" bindtap="stop">这次不记录</button></view>
+  </view>
+  <view wx:else><text class="section-title">这段时间，已经记下了。</text><button class="primary paragraph" bindtap="goHistory">看看心情足迹</button></view>
+</view>

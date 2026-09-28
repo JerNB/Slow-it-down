@@ -1,0 +1,6 @@
+.letter-title { display: flex; align-items: baseline; width: 100%; gap: 16rpx; min-height: 88rpx; padding: 18rpx 0; border-radius: 0; border-bottom: 1rpx solid #c9bdac; background: transparent; color: #443f38; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 34rpx; line-height: 1.5; text-align: left; }
+.letter-number { flex: none; color: #926e5e; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; font-size: 22rpx; }
+.letter-heading { flex: 1; }
+.letter-toggle { flex: none; color: #626950; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; font-size: 34rpx; }
+.letter-body .paragraph { display: block; margin: 24rpx 0 32rpx; color: #514c43; font-size: 29rpx; line-height: 2; }
+.support-links { display: flex; flex-direction: column; gap: 16rpx; }

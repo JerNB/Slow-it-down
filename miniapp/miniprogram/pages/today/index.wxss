@@ -1,2 +1,42 @@
-.idea { padding-top: 48rpx; }
-.idea-title { display: block; font-size: 44rpx; line-height: 1.45; font-weight: 500; margin-top: 22rpx; }
+.today-page { padding-top: 30rpx; }
+.home-top { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; margin-bottom: 64rpx; }
+.home-brand { display: flex; align-items: center; gap: 14rpx; color: #443f38; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 39rpx; letter-spacing: 3rpx; white-space: nowrap; }
+.brand-symbol { color: #8b6b59; font-family: sans-serif; font-size: 58rpx; line-height: 1; }
+.mood-shortcut { min-height: 80rpx; padding: 14rpx 20rpx; background: #d0c4b6; color: #443f38; font-size: 25rpx; white-space: nowrap; }
+.mood-shortcut text { padding-left: 8rpx; }
+.home-intro { margin-bottom: 34rpx; }
+.home-intro .title { margin: 14rpx 0 0; font-size: 58rpx; }
+
+.home-stage { overflow: hidden; background: #eee6da; }
+.idea { padding: 42rpx 34rpx 38rpx; }
+.idea-title { display: block; margin-top: 26rpx; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 48rpx; line-height: 1.5; letter-spacing: 1rpx; }
+.idea-desc { display: block; margin: 18rpx 0 32rpx; color: #60594f; font-size: 28rpx; line-height: 1.75; }
+.idea-primary { position: relative; width: 100%; }
+.idea-primary-arrow { position: absolute; right: 32rpx; font-size: 34rpx; line-height: 1; }
+.idea-tools { display: flex; gap: 16rpx; margin-top: 18rpx; }
+.tool-button { flex: 1; min-width: 0; min-height: 84rpx; padding: 14rpx 12rpx; border: 1rpx solid #c9bdac; background: #f7f1e8; color: #4e553e; font-size: 26rpx; }
+.home-mantra { position: relative; overflow: hidden; min-height: 235rpx; padding: 40rpx 34rpx 34rpx; background: #d8bdac; color: #58483e; }
+.mantra-watermark { position: absolute; right: -22rpx; top: -84rpx; color: rgba(255, 249, 238, .36); font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 290rpx; line-height: 1; }
+.mantra-title { position: relative; display: block; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 38rpx; line-height: 1.55; letter-spacing: 2rpx; }
+.mantra-caption { position: relative; display: block; margin-top: 20rpx; font-size: 24rpx; letter-spacing: 2rpx; }
+.resume-action, .history-link { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 94rpx; padding: 18rpx 26rpx; border: 1rpx solid #c9bdac; border-radius: 12rpx; background: #eee6da; color: #4e553e; font-size: 27rpx; text-align: left; }
+.resume-action { margin-top: 28rpx; }
+
+.path-section { margin-top: 82rpx; }
+.path-heading { display: block; margin: 6rpx 0 26rpx; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 45rpx; line-height: 1.5; }
+.path-grid { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.path { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; width: calc(50% - 8rpx); min-height: 246rpx; padding: 54rpx 18rpx 56rpx; border-radius: 0; text-align: center; }
+.path-index { position: absolute; top: 18rpx; left: 20rpx; display: block; font-size: 21rpx; letter-spacing: 1rpx; opacity: .85; }
+.path-title { display: block; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 37rpx; line-height: 1.35; }
+.path-copy { display: block; margin-top: 8rpx; font-size: 24rpx; line-height: 1.5; opacity: .85; }
+.path-arrow { position: absolute; right: 20rpx; bottom: 12rpx; font-size: 36rpx; line-height: 1; }
+.path-todo { background: #bec3a9; color: #424936; border-radius: 0 0 36rpx 0; }
+.path-pause { background: #5f654e; color: #fffaf0; border-radius: 36rpx 0 0 0; }
+.path-letters { background: #eee6da; color: #58483e; border-top: 1rpx solid #9d8877; border-bottom: 1rpx solid #9d8877; }
+.path-campus { background: #d8bdac; color: #58483e; border-radius: 0 0 0 36rpx; }
+
+.reading-preview { margin-top: 80rpx; padding-top: 32rpx; border-top: 1rpx solid #c9bdac; }
+.reading-title { display: block; margin: 22rpx 0 24rpx; font-family: "Songti SC", "Noto Serif SC", "SimSun", serif; font-size: 39rpx; line-height: 1.7; }
+.reading-link { display: flex; align-items: center; justify-content: space-between; min-height: 88rpx; padding: 15rpx 24rpx; border: 1rpx solid #c9bdac; border-radius: 12rpx; background: #eee6da; color: #4e553e; text-align: left; }
+.history-link { margin-top: 58rpx; }
+.storage-note { display: block; margin: 46rpx 0 12rpx; padding-top: 24rpx; border-top: 1rpx solid #c9bdac; color: #60594f; font-size: 23rpx; line-height: 1.7; }

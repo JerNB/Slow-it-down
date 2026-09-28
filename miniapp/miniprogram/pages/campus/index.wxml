@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <text class="eyebrow">把求助的第一步，变得近一点</text>
+  <text class="title">学校里，也有人愿意听。</text>
+  <text class="muted paragraph">输入学校名称，或允许定位后先找到附近学校，再查看它的官方支持页面。</text>
+  <view class="row field"><input class="query row-main" value="{{query}}" maxlength="120" bindinput="input" placeholder="如 NYU、University of Toronto" aria-label="学校名称" confirm-type="search" bindconfirm="search" /><button class="secondary" bindtap="search" disabled="{{busy}}">{{busy ? '查找中…' : '查找'}}</button></view>
+  <view class="locate-row"><text class="muted small">或者</text><button class="text-button" bindtap="locate" disabled="{{locating}}">{{locating ? '正在查找…' : '用当前位置找附近学校 →'}}</button></view>
+  <text class="muted small paragraph">仅点击定位后才申请权限。坐标由设备直接发送给 BigDataCloud 换算城市；本站只接收城市与国家，不保存位置。请在结果中确认就读学校。</text>
+  <text wx:if="{{message}}" class="status paragraph">{{message}}</text>
+  <view wx:if="{{schools.length}}" class="school-list"><text class="eyebrow">选择你的学校</text><button wx:for="{{schools}}" wx:key="id" class="school-row" data-id="{{item.id}}" bindtap="choose"><text class="school-name">{{item.name}}</text><text class="muted small">{{item.city}} · {{item.country}}</text><text class="school-arrow">→</text></button></view>
+  <view wx:if="{{support}}" class="detail"><text class="eyebrow">已选学校 · 请确认校区</text><text class="section-title">{{support.school.name}}</text><text class="muted small">{{support.school.city}} · {{support.school.country}}</text><text wx:if="{{support.resources.length}}" class="paragraph">在学校官网找到这些心理支持页面：</text><text wx:else class="paragraph">暂时没有找到可核实的校内心理支持页面。你可以访问学校官网继续查找。</text><view wx:for="{{support.resources}}" wx:key="url" class="resource"><text class="resource-title">{{item.title}}</text><text wx:if="{{item.address}}" class="muted small paragraph">{{item.address}}</text><button class="text-button" data-index="{{index}}" bindtap="copyResource">复制官网页面链接 →</button><text class="muted small">预约、费用、校区和开放时间以官网为准。</text></view><button class="text-button" bindtap="copySchool">复制学校主页链接 →</button><text class="muted small paragraph">学校信息来自 ROR 机构目录；官网页面查找日期：{{support.checked}}。</text></view>
+  <text class="muted small paragraph">搜索结果不是紧急援助。如有即时危险，请联系当地紧急服务。</text>
+</view>

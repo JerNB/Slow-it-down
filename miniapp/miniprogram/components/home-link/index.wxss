@@ -1,0 +1,4 @@
+.home-link { display: inline-flex; align-items: center; justify-content: center; gap: 12rpx; box-sizing: border-box; min-height: 82rpx; margin: 0; padding: 16rpx 26rpx; border: 1rpx solid #b9ab99; border-radius: 999rpx; background: #eee6da; color: #443f38; font-size: 26rpx; line-height: 1.2; }
+.home-link::after { border: 0; }
+.home-link-arrow { font-size: 34rpx; line-height: 1; }
+.home-link-pressed { opacity: .72; }

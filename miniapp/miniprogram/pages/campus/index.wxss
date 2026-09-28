@@ -1,0 +1,12 @@
+.query { box-sizing: border-box; min-height: 96rpx; padding: 0 22rpx; border: 1rpx solid #c9bdac; border-radius: 18rpx; background: #eee6da; }
+.locate-row { display: flex; align-items: center; gap: 24rpx; margin: 22rpx 0 8rpx; }
+.status { color: #4e553e; margin: 28rpx 0; }
+.school-list { margin: 42rpx 0 56rpx; }
+.school-row { position: relative; display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 26rpx 46rpx 26rpx 0; border: 0; border-bottom: 1rpx solid #c9bdac; border-radius: 0; background: transparent; text-align: left; line-height: 1.5; }
+.school-row::after { display: none; }
+.school-name { font-size: 35rpx; color: #413f35; }
+.school-arrow { position: absolute; right: 4rpx; top: 40rpx; font-size: 38rpx; color: #4e553e; }
+.detail { padding: 45rpx 0; border-top: 1rpx solid #c9bdac; }
+.detail .section-title { margin: 12rpx 0; }
+.resource { display: flex; flex-direction: column; align-items: flex-start; gap: 12rpx; padding: 28rpx 0; border-top: 1rpx solid #c9bdac; }
+.resource-title { font-size: 33rpx; line-height: 1.45; color: #4e553e; }

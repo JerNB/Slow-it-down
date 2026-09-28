@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="home-nav"><home-link /></view>
+  <view wx:if="{{kind === 'book'}}">
+    <text class="eyebrow">给自己一个阅读的起点</text><text class="title">《{{book.title}}》</text>
+    <text class="muted paragraph">{{book.author}}{{book.original ? ' · ' + book.original : ''}}</text><text class="paragraph">{{book.about}}</text>
+    <view wx:if="{{hasQuote}}" class="divider"><text class="section-title">“{{quote.text}}”</text><text class="muted small paragraph">本站译文 · 非出版译本</text><text class="paragraph" lang="en">{{quote.original}}</text><text class="muted small paragraph">{{quote.label}}</text><button class="text-button" bindtap="copySource">复制原文出处链接</button></view>
+    <view wx:else class="divider"><text class="muted small paragraph">{{book.sourceLabel}}</text><button class="text-button" bindtap="copySource">复制书目信息链接</button><button wx:if="{{noteId}}" class="text-button" bindtap="viewNote">读一篇关于这本书的札记 →</button></view>
+    <view class="divider"><text class="section-title">从哪里开始</text><text class="paragraph">{{book.start}}</text><text class="muted small">可先在学校或当地的图书馆查找；不同中文版书名可能略有差异。</text></view>
+    <button class="secondary paragraph" bindtap="saveBook" disabled="{{saved}}">{{saved ? '已放进我的期待' : '放进我的期待'}}</button>
+  </view>
+  <view wx:else>
+    <text class="eyebrow">本站阅读札记 · 非作者原话</text><text class="title">{{literature.title}}</text>
+    <text class="muted paragraph">{{literature.author}} · 《{{literature.work}}》</text>
+    <text wx:if="{{literature.contentNote}}" class="muted small paragraph">{{literature.contentNote}}，请按自己的状态选择是否阅读。</text>
+    <text class="paragraph">{{literature.context}}</text><text class="paragraph">{{literature.reflection}}</text>
+    <view wx:if="{{literature.question}}" class="divider"><text class="eyebrow">留给自己的问题</text><text class="paragraph">{{literature.question}}</text></view>
+    <view class="divider"><text class="muted small">{{literature.label}}</text><button class="text-button" bindtap="copySource">复制资料出处链接</button></view>
+  </view>
+  <text wx:if="{{error}}" class="notice paragraph">{{error}}</text>
+</view>

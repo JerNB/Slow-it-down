@@ -1,0 +1,15 @@
+.pause-page { text-align: center; }
+.timer { box-sizing: border-box; position: relative; width: 520rpx; height: 520rpx; margin: 68rpx auto 48rpx; border-radius: 50%; background: #e6e4d6; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.timer-ripple { position: absolute; border: 1rpx solid rgba(77, 103, 94, .55); border-radius: 50%; pointer-events: none; }
+.timer-ripple-inner { top: -16rpx; right: -16rpx; bottom: -16rpx; left: -16rpx; opacity: .5; }
+.timer-ripple-outer { top: -34rpx; right: -34rpx; bottom: -34rpx; left: -34rpx; opacity: .35; }
+.timer-number, .timer > .eyebrow { position: relative; z-index: 1; }
+.timer-number { font-size: 94rpx; line-height: 1.3; font-weight: 300; }
+@media (prefers-reduced-motion: no-preference) {
+  .timer.is-breathing .timer-ripple-inner { animation: tide-inner 6.4s ease-in-out infinite; }
+  .timer.is-breathing .timer-ripple-outer { animation: tide-outer 6.4s ease-in-out infinite; }
+}
+@keyframes tide-inner { 0%, 100% { transform: scale(.97); opacity: .28; } 50% { transform: scale(1.045); opacity: .62; } }
+@keyframes tide-outer { 0%, 100% { transform: scale(.98); opacity: .2; } 50% { transform: scale(1.08); opacity: .5; } }
+.durations { justify-content: center; }
+.pause-page .text-button { text-align: center; }
