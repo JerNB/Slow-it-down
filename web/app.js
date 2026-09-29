@@ -2,6 +2,7 @@ import {lettersPage,pausePage,campusPage,afterSpaceRender} from './student-space
 import {LITERATURE} from './literature.js?v=20260927b';
 import {IDEAS,BOOKS,QUOTES,CONCERNS,RECOMMENDATIONS,REASONS} from './content.js?v=20260927b';
 import {normalize,prioritize,reorder,pickIdea,dailyIndex} from './logic.js';
+import {createBackup,parseBackup} from './backup.js';
 const KEY='manmanlai.v1',IDEA_KEY='manmanlai.last-idea';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -9,7 +10,7 @@ const uid=()=>crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(36)
 const emptyData=()=>({wishes:[],entries:[],todos:[]});
 let data=emptyData(),storageOK=true,page='today',selectedMood='',moodDraft='',todoDraft='',activeIdea=null,reflection='',quizConcern='',quizStyle='',lastTrigger=null,returnToWays=false;
 try{const raw=localStorage.getItem(KEY);if(raw)data=normalize(JSON.parse(raw));}catch{storageOK=false;}
-let suggestion,undoTask=null;
+let suggestion,undoTask=null,pendingImport=null;
 function nextSuggestion(){let previous=suggestion?.id;try{previous=previous||localStorage.getItem(IDEA_KEY);}catch{}suggestion=pickIdea(IDEAS,previous);try{localStorage.setItem(IDEA_KEY,suggestion.id);}catch{}}
 nextSuggestion();
 function save(next){if(!storageOK){toast('暂时无法保存，请检查浏览器的存储设置。');return false;}try{localStorage.setItem(KEY,JSON.stringify(next));data=next;return true;}catch{storageOK=false;toast('保存没有成功，请保留输入的文字，稍后再试。');return false;}}
@@ -137,7 +138,7 @@ function personalNav(){return `<nav class="personal-tabs" aria-label="我的记�
 function wishesPage(){return `${personalNav()}<section class="page-heading heading-row"><div><h1>存一点期待。</h1><p class="muted">等你想开始的时候，再回来。</p></div><button class="secondary" data-action="add">${icon('plus')} 记下想法</button></section>${data.wishes.length?`<div class="wish-list">${data.wishes.map(w=>`<article class="wish"><div><h2>${esc(w.title)}</h2><p>${esc(w.step||'还没想到第一步也没关系。')}</p></div><div class="wish-actions"><button class="text-button" data-action="start" data-id="${esc(w.id)}">从一小步开始 ${icon('arrow')}</button><button class="icon-button small" data-action="remove-wish" data-id="${esc(w.id)}" aria-label="移除期待：${esc(w.title)}">${icon('trash')}</button></div></article>`).join('')}</div>`:`<div class="empty"><span aria-hidden="true">✳</span><h2>给灵光一现，留个位置。</h2><button class="text-button" data-action="add">记下第一个想法 ${icon('plus')}</button></div>`}`;}
 function historyPage(){const groups=new Map();[...data.entries].reverse().forEach(e=>{const key=dayKey(e.at);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(e);});return `${personalNav()}<section class="page-heading"><h1>看看走过的路。</h1><p class="muted">不评分，也不比较。</p></section>${data.entries.length?[...groups.values()].map(entries=>`<section class="timeline-day"><p class="timeline-date">${dateLabel(entries[0].at)}</p><div>${entries.map(e=>`<article class="history-entry"><span class="entry-meta">${new Date(e.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})} · ${e.type==='mood'?'此刻的心情':'一件小事之后'}</span><h2>${esc(e.type==='mood'?(e.mood||'给自己的一句话'):e.title)}</h2>${e.feeling?`<p>${esc(e.feeling)}</p>`:''}${e.note?`<p>${esc(e.note)}</p>`:''}<button class="icon-button small entry-delete" data-action="remove-entry" data-id="${esc(e.id)}" aria-label="删除这条记录">${icon('trash')}</button></article>`).join('')}</div></section>`).join(''):`<div class="empty"><span aria-hidden="true">◌</span><h2>每一种感受，都可以留下来。</h2><button class="text-button" data-action="open-mood">记一笔心情 ${icon('plus')}</button></div>`}`;}
 function confirmDialog(title,copy,action,id=''){openDialog(`<h2 id="dialog-title">${title}</h2><p class="muted">${copy}</p><div class="dialog-actions"><button class="secondary" data-action="close">保留</button><button class="text-button danger" data-action="${action}" data-id="${esc(id)}">确认删除</button></div>`);}
-function privacyDialog(){openDialog(`<p class="eyebrow">属于你的小空间</p><h2 id="dialog-title">关于你的记录</h2><p class="muted">无需注册。心情、期待和待办只保存在当前浏览器，不会上传到网站服务器。选书问答不保存你的答案。静坐计时仅保存在当前标签页的会话中。</p><p class="muted">记录不能跨设备同步，清除浏览器数据会丢失。共用设备的人也可能看到这些内容。</p><p class="muted">学校搜索会把校名或城市发送给本站查询服务，并使用 ROR 学校目录。只有你点击定位后，设备才把坐标直接发送给 BigDataCloud 换算城市；本站不会收到或保存坐标。打开学校官网或外部搜索时，对方会收到相应的访问请求。</p><p class="muted">这里提供自我记录和阅读灵感，不提供心理诊断或治疗。</p><div class="dialog-actions"><button class="secondary" data-action="connect">找一个安心的人聊聊</button><button class="text-button danger" data-action="clear">清空所有记录</button></div>`);}
+function privacyDialog(){openDialog(`<p class="eyebrow">属于你的小空间</p><h2 id="dialog-title">关于你的记录</h2><p class="muted">无需注册。心情、期待和待办只保存在当前浏览器，不会上传到网站服务器。选书问答不保存你的答案。静坐计时仅保存在当前标签页的会话中。</p><p class="muted">记录不能跨设备同步，清除浏览器数据会丢失。共用设备的人也可能看到这些内容。</p><p class="muted">可以手动下载备份，再在这个站点导入。备份文件包含私人记录，请自己妥善保管；导入会替换这个浏览器里现有的记录。</p><p class="muted">学校搜索会把校名或城市发送给本站查询服务，并使用 ROR 学校目录。只有你点击定位后，设备才把坐标直接发送给 BigDataCloud 换算城市；本站不会收到或保存坐标。打开学校官网或外部搜索时，对方会收到相应的访问请求。</p><p class="muted">这里提供自我记录和阅读灵感，不提供心理诊断或治疗。</p><input id="backup-file" type="file" accept=".json,application/json" hidden><div class="dialog-actions"><button class="secondary" data-action="export-backup">下载记录备份</button><button class="secondary" data-action="choose-backup">导入记录备份</button><button class="secondary" data-action="connect">找一个安心的人聊聊</button><button class="text-button danger" data-action="clear">清空所有记录</button></div>`);}
 function connectionDialog(){openDialog(`<p class="eyebrow">不必先整理好情绪</p><h2 id="dialog-title">从一句话开始。</h2><label class="field"><span>改成你自己的语气</span><textarea id="contact-text" maxlength="2000">最近有点想找人聊聊。你这几天有空打个电话，或者一起吃顿饭吗？不用帮我解决什么，陪我说说话就好。</textarea></label><div class="dialog-actions"><button class="primary" data-action="copy-message">复制这段话</button></div><p class="page-note">复制后发给让你安心的人。这里不会替你发送。</p>`);}
 function saveAndRender(next,message){if(!save(next))return false;render();if(message)toast(message);return true;}
 function focusQuiz(){document.querySelector('#quiz-heading')?.focus({preventScroll:true});animate(app.querySelector('.quiz'));}
@@ -212,6 +213,18 @@ document.addEventListener('click',async e=>{
  if(action==='quote'&&book)bookDialog(book,true,QUOTES[Number(b.dataset.quote)]);
  if(action==='save-book'&&book){if(data.wishes.some(w=>w.bookId===book.id)){toast('这本书已经在“我的期待”里了。');return;}if(save({...data,wishes:[...data.wishes,{id:uid(),bookId:book.id,title:`读一点《${book.title}》`,step:book.start}]})){toast('已放进“我的期待”。');b.disabled=true;b.textContent='已经存下了';}}
  if(action==='privacy')privacyDialog();
+ if(action==='export-backup'){
+  try{
+   const url=URL.createObjectURL(new Blob([createBackup(data)],{type:'application/json'}));
+   const link=document.createElement('a');link.href=url;link.download=`manmanlai-export-${new Date().toISOString().slice(0,10)}.json`;
+   link.click();setTimeout(()=>URL.revokeObjectURL(url),60000);
+   toast('备份已开始下载，请妥善保管。');
+  }catch{toast('暂时无法生成备份，请稍后再试。');}
+ }
+ if(action==='choose-backup')dialog.querySelector('#backup-file')?.click();
+ if(action==='confirm-import'&&pendingImport){
+  if(save(pendingImport)){pendingImport=null;closeDialog();render();toast('记录已从备份恢复。');}
+ }
  if(action==='connect')connectionDialog();
  if(action==='copy-message'){const field=dialog.querySelector('#contact-text');try{await navigator.clipboard.writeText(field.value);toast('已复制。');}catch{field.focus();field.select();toast('请长按或按 Ctrl+C 复制选中的文字。');}}
  if(action==='remove-wish')confirmDialog('放下这份期待？','不再想做也没关系。移除后无法恢复。','confirm-wish',id);
@@ -220,6 +233,16 @@ document.addEventListener('click',async e=>{
  if(action==='confirm-entry'&&saveAndRender({...data,entries:data.entries.filter(x=>x.id!==id)},'这条记录已删除。'))closeDialog();
  if(action==='clear')confirmDialog('清空所有记录？','心情、期待和待办都会被删除，无法恢复。','confirm-clear');
  if(action==='confirm-clear'){try{localStorage.removeItem(KEY);data=emptyData();undoTask=null;storageOK=true;moodDraft='';selectedMood='';todoDraft='';closeDialog();render();toast('记录已清空。');}catch{toast('未能清空，请检查浏览器设置。');}}
+});
+dialog.addEventListener('change',async e=>{
+ if(e.target.id!=='backup-file')return;
+ const file=e.target.files?.[0];if(!file)return;
+ // Reject oversized or unknown backups before replacing any existing browser records.
+ if(file.size>2_000_000){toast('备份文件超过 2 MB，未导入。');return;}
+ try{
+  pendingImport=parseBackup(await file.text());
+  openDialog('<h2 id="dialog-title">导入这份备份？</h2><p class="muted">这会替换此浏览器当前站点的心情、期待和待办记录。操作前建议先下载一份现有记录。</p><div class="dialog-actions"><button class="secondary" data-action="close">暂不导入</button><button class="primary" data-action="confirm-import">替换并导入</button></div>');
+ }catch{pendingImport=null;toast('无法读取这份备份，请选择本站导出的 JSON 文件。');}
 });
 document.addEventListener('submit',e=>{
  const form=e.target;if(!['mood-form','wish-form','start-form','reflection-form','todo-form','edit-task-form'].includes(form.id))return;e.preventDefault();const fields=new FormData(form);
